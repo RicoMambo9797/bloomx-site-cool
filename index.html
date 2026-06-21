@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLOOMX ALLIANCE — Financing the Energy Transition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07100F; --bg2:#0A1614; --panel:#0C1A18;
+  --card:rgba(255,255,255,0.035); --card-h:rgba(255,255,255,0.06);
+  --line:rgba(127,212,245,0.13); --line-soft:rgba(255,255,255,0.07);
+  --text:#EAF0EE; --muted:#7E8C89; --dim:#56605E;
+  --sky:#5BC2EE; --skyL:#9FE0F7; --teal:#2BB78C; --gold:#D9BC63; --indigo:#1E2A5A;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.5}
+.mono{font-family:'Space Mono',monospace;letter-spacing:0.04em}
+.disp{font-family:'Space Grotesk',sans-serif}
+
+/* ── ambient aurora ── */
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.aurora::before,.aurora::after{content:'';position:absolute;border-radius:50%;filter:blur(120px);opacity:0.5}
+.aurora::before{width:60vw;height:60vw;top:-20vw;right:-10vw;background:radial-gradient(circle,rgba(91,194,238,0.35),transparent 65%)}
+.aurora::after{width:50vw;height:50vw;top:5vw;left:-15vw;background:radial-gradient(circle,rgba(43,183,140,0.22),transparent 65%)}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{position:relative;z-index:2}
+
+/* ── announcement ── */
+.announce{display:flex;justify-content:center;align-items:center;gap:0.6rem;padding:0.5rem 1rem;background:linear-gradient(90deg,rgba(91,194,238,0.10),rgba(217,188,99,0.10));border-bottom:1px solid var(--line);font-size:0.72rem}
+.announce .mono{color:var(--skyL);text-transform:uppercase;letter-spacing:0.12em}
+.announce span{color:var(--muted)}
+
+/* ── nav ── */
+nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;background:rgba(7,16,15,0.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--line-soft)}
+.brand{display:flex;align-items:center;gap:0.65rem;text-decoration:none}
+.brand svg{width:34px;height:34px;border-radius:9px}
+.brand .wm{font-family:'Space Grotesk';font-weight:600;font-size:1.05rem;letter-spacing:0.02em;line-height:1;color:#fff}
+.brand .wm .x{color:var(--gold)}
+.brand .sub{font-family:'Space Mono';font-size:0.54rem;letter-spacing:0.34em;color:var(--muted);margin-top:3px}
+.navlinks{display:flex;gap:2rem;align-items:center}
+.navlinks a{font-family:'Space Mono';text-decoration:none;color:var(--muted);font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;transition:color .2s}
+.navlinks a:hover{color:var(--text)}
+.navactions{display:flex;align-items:center;gap:0.8rem}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{background:none;border:none;padding:0.35rem 0.7rem;font-family:'Space Mono';font-size:0.68rem;color:var(--muted);cursor:pointer;transition:all .2s}
+.lang button.active{background:var(--sky);color:#04100E}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;font-family:'Space Grotesk';font-weight:500;font-size:0.82rem;text-decoration:none;padding:0.6rem 1.2rem;border-radius:999px;transition:all .2s;cursor:pointer;border:none}
+.btn-primary{background:linear-gradient(135deg,var(--sky),var(--teal));color:#04100E}
+.btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-ghost{border:1px solid var(--line);color:var(--text);background:transparent}
+.btn-ghost:hover{border-color:var(--sky);background:rgba(91,194,238,0.06)}
+
+/* ── hero ── */
+.hero{padding:6rem 2.5rem 3rem;max-width:1200px;margin:0 auto;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:0.6rem;font-family:'Space Mono';font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--skyL);margin-bottom:1.8rem}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 12px var(--teal)}
+h1{font-family:'Space Grotesk';font-weight:700;font-size:clamp(2.6rem,6.5vw,5.6rem);line-height:0.98;letter-spacing:-0.02em;color:#fff;max-width:14ch}
+h1 .grad{background:linear-gradient(110deg,var(--sky),var(--teal) 55%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{margin-top:1.8rem;font-size:1.05rem;font-weight:300;color:var(--muted);max-width:50ch;line-height:1.7}
+.hero-cta{margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap}
+
+/* ── marquee ── */
+.marquee{margin-top:4rem;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);padding:1rem 0;overflow:hidden;white-space:nowrap;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee-track{display:inline-flex;gap:2.5rem;animation:scroll 38s linear infinite;will-change:transform}
+.marquee-track span{font-family:'Space Mono';font-size:0.9rem;color:var(--muted);letter-spacing:0.05em;display:inline-flex;align-items:center;gap:2.5rem}
+.marquee-track span::after{content:'◆';color:var(--gold);font-size:0.6rem}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── section scaffolding ── */
+section{position:relative}
+.sec{max-width:1200px;margin:0 auto;padding:5.5rem 2.5rem}
+.sec-tag{font-family:'Space Mono';font-size:0.72rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--sky);margin-bottom:1rem;display:flex;align-items:center;gap:0.7rem}
+.sec-tag::before{content:'';width:28px;height:1px;background:var(--sky)}
+h2{font-family:'Space Grotesk';font-weight:600;font-size:clamp(1.9rem,3.6vw,2.9rem);line-height:1.08;letter-spacing:-0.01em;color:#fff;max-width:20ch}
+.lead{margin-top:1.2rem;color:var(--muted);font-weight:300;max-width:60ch;line-height:1.75;font-size:1rem}
+
+/* ── credibility band ── */
+.cred{border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);background:var(--bg2)}
+.cred-inner{max-width:1200px;margin:0 auto;padding:2.5rem;display:grid;grid-template-columns:1.1fr 1fr;gap:2.5rem;align-items:center}
+.cred-label{font-family:'Space Mono';font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim);margin-bottom:1.1rem}
+.chips{display:flex;flex-wrap:wrap;gap:0.6rem}
+.chip{font-family:'Space Mono';font-size:0.74rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:0.4rem 0.9rem;background:rgba(255,255,255,0.02)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.stat .n{font-family:'Space Grotesk';font-weight:700;font-size:1.7rem;background:linear-gradient(135deg,var(--skyL),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .l{font-family:'Space Mono';font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:0.2rem}
+
+/* ── capabilities grid ── */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:3rem;background:var(--line-soft);border:1px solid var(--line-soft);border-radius:18px;overflow:hidden}
+.cap{background:var(--bg);padding:2rem 1.8rem;transition:background .25s;position:relative}
+.cap:hover{background:var(--card)}
+.cap-idx{font-family:'Space Mono';font-size:0.7rem;color:var(--sky);letter-spacing:0.1em}
+.cap-ic{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;margin:1.1rem 0 1rem;background:linear-gradient(135deg,rgba(91,194,238,0.16),rgba(43,183,140,0.10));border:1px solid var(--line)}
+.cap-ic svg{width:21px;height:21px;stroke:var(--skyL);fill:none;stroke-width:1.6}
+.cap h3{font-family:'Space Grotesk';font-weight:600;font-size:1.12rem;color:#fff;margin-bottom:0.55rem}
+.cap p{font-size:0.86rem;color:var(--muted);line-height:1.65;font-weight:300}
+
+/* ── process ── */
+.proc{background:var(--bg2);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem}
+.step{position:relative;padding-top:1.5rem;border-top:1px solid var(--line)}
+.step .num{font-family:'Space Mono';font-size:0.74rem;color:var(--gold);letter-spacing:0.1em}
+.step h4{font-family:'Space Grotesk';font-weight:600;font-size:1.15rem;color:#fff;margin:0.7rem 0 0.5rem}
+.step p{font-size:0.84rem;color:var(--muted);line-height:1.6;font-weight:300}
+.step::before{content:'';position:absolute;top:-1px;left:0;width:36%;height:1px;background:linear-gradient(90deg,var(--sky),transparent)}
+
+/* ── feature split ── */
+.feature{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center}
+.feature-visual{aspect-ratio:1/0.9;border-radius:20px;border:1px solid var(--line);background:
+  radial-gradient(circle at 30% 30%,rgba(91,194,238,0.18),transparent 55%),
+  radial-gradient(circle at 75% 70%,rgba(217,188,99,0.16),transparent 55%),
+  linear-gradient(160deg,#0A1614,#081210);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.node{position:absolute;font-family:'Space Mono';font-size:0.66rem;color:var(--muted);border:1px solid var(--line);background:rgba(7,16,15,0.6);padding:0.3rem 0.6rem;border-radius:7px;backdrop-filter:blur(4px)}
+.feature-list{margin-top:1.6rem;display:flex;flex-direction:column;gap:1rem}
+.fl{display:flex;gap:0.8rem;align-items:flex-start}
+.fl .b{color:var(--teal);font-family:'Space Mono';margin-top:1px}
+.fl div{font-size:0.92rem;color:var(--muted);line-height:1.6}
+.fl strong{color:var(--text);font-weight:500}
+
+/* ── ASEAN band ── */
+.aseangrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:3rem}
+.acard{border:1px solid var(--line-soft);border-radius:14px;padding:1.5rem;background:var(--card);transition:border-color .25s}
+.acard:hover{border-color:var(--sky)}
+.acard .yr{font-family:'Space Grotesk';font-weight:700;font-size:1.6rem;color:var(--skyL)}
+.acard h4{font-family:'Space Grotesk';font-size:0.98rem;color:#fff;margin:0.4rem 0 0.4rem}
+.acard p{font-size:0.8rem;color:var(--muted);line-height:1.55;font-weight:300}
+
+/* ── CTA ── */
+.cta-band{max-width:1200px;margin:0 auto;padding:0 2.5rem 5.5rem}
+.cta-inner{border:1px solid var(--line);border-radius:24px;padding:4rem 3rem;text-align:center;position:relative;overflow:hidden;background:
+  radial-gradient(circle at 50% 0%,rgba(91,194,238,0.16),transparent 60%),var(--bg2)}
+.cta-inner h2{margin:0 auto}
+.cta-inner .lead{margin:1.2rem auto 2rem}
+
+/* ── footer ── */
+footer{border-top:1px solid var(--line-soft);background:var(--bg2)}
+.foot{max-width:1200px;margin:0 auto;padding:3rem 2.5rem}
+.foot-top{display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap}
+.foot .brand .wm{font-size:1.1rem}
+.foot-tag{font-family:'Space Mono';font-size:0.72rem;color:var(--muted);margin-top:0.6rem;line-height:1.6}
+.foot-links{display:flex;gap:2rem;font-family:'Space Mono';font-size:0.74rem}
+.foot-links a{color:var(--muted);text-decoration:none}
+.foot-links a:hover{color:var(--text)}
+.foot-copy{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--line-soft);font-family:'Space Mono';font-size:0.66rem;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ── hamburger + mobile menu ── */
+.burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:42px;height:42px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,0.02);cursor:pointer;padding:0;flex-shrink:0}
+.burger span{display:block;width:18px;height:1.8px;background:var(--text);margin:0 auto;border-radius:2px;transition:transform .3s ease,opacity .25s ease}
+body.menu-open .burger span:nth-child(1){transform:translateY(6.8px) rotate(45deg)}
+body.menu-open .burger span:nth-child(2){opacity:0}
+body.menu-open .burger span:nth-child(3){transform:translateY(-6.8px) rotate(-45deg)}
+.mobile-menu{position:fixed;inset:0;z-index:45;background:rgba(7,16,15,0.97);backdrop-filter:blur(20px);opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease;display:flex;flex-direction:column;padding:6.5rem 1.6rem 2.5rem}
+body.menu-open .mobile-menu{opacity:1;visibility:visible}
+.mobile-menu a.mlink{font-family:'Space Grotesk';font-weight:600;font-size:1.9rem;color:#fff;text-decoration:none;padding:1rem 0;border-bottom:1px solid var(--line-soft);display:flex;align-items:center;justify-content:space-between;transform:translateY(14px);opacity:0;transition:transform .4s ease,opacity .4s ease,color .2s}
+.mobile-menu a.mlink .mi{font-family:'Space Mono';font-size:0.7rem;color:var(--sky);font-weight:400}
+.mobile-menu a.mlink:active{color:var(--sky)}
+body.menu-open .mobile-menu a.mlink{transform:none;opacity:1}
+body.menu-open .mobile-menu a.mlink:nth-child(1){transition-delay:.08s}
+body.menu-open .mobile-menu a.mlink:nth-child(2){transition-delay:.14s}
+body.menu-open .mobile-menu a.mlink:nth-child(3){transition-delay:.20s}
+body.menu-open .mobile-menu a.mlink:nth-child(4){transition-delay:.26s}
+.mobile-menu .m-cta{margin-top:auto;display:flex;flex-direction:column;gap:1rem}
+.mobile-menu .btn-primary{justify-content:center;font-size:1rem;padding:0.9rem}
+.mobile-menu .m-foot{font-family:'Space Mono';font-size:0.68rem;color:var(--muted);text-align:center;line-height:1.7}
+
+@media(max-width:980px){
+  .navlinks{display:none}
+  .navactions .btn-primary{display:none}
+  .burger{display:flex}
+  .cred-inner,.feature{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr}
+  .proc-grid,.aseangrid,.stats{grid-template-columns:repeat(2,1fr)}
+  nav{padding:0.9rem 1.3rem}
+  .sec,.hero{padding-left:1.3rem;padding-right:1.3rem}
+}
+@media(min-width:981px){
+  .mobile-menu{display:none}
+}
+</style>
+</head>
+<body>
+<div class="aurora"></div>
+<div class="grain"></div>
+
+<!-- shared logo gradient defs -->
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="bxSky" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7FD4F5"/><stop offset="1" stop-color="#2E9BD6"/></linearGradient>
+  <linearGradient id="bxGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EAD18A"/><stop offset="0.5" stop-color="#C9A84C"/><stop offset="1" stop-color="#A8821F"/></linearGradient>
+</defs></svg>
+
+<div class="wrap">
+
+<div class="announce">
+  <span class="mono">NEW</span>
+  <span data-jp="グローバルサウスのCORSIA／ネイチャーベース・カーボンクレジット開発を始動" data-en="Now developing Global South CORSIA & nature-based carbon credits">グローバルサウスのCORSIA／ネイチャーベース・カーボンクレジット開発を始動</span>
+</div>
+
+<nav>
+  <a href="#top" class="brand">
+    <svg viewBox="0 0 200 200"><rect x="6" y="6" width="188" height="188" rx="40" fill="url(#bxSky)"/><g transform="translate(100,100) scale(1.25)"><path d="M0 -42 L34 -6 L24 4 L0 -22 L-24 4 L-34 -6 Z" fill="url(#bxGold)"/><path d="M0 42 L34 6 L24 -4 L0 22 L-24 -4 L-34 6 Z" fill="url(#bxGold)" opacity="0.6"/><circle cx="0" cy="0" r="6" fill="#fff"/></g></svg>
+    <span><span class="wm">BLOOM<span class="x">X</span></span><br><span class="sub">ALLIANCE</span></span>
+  </a>
+  <div class="navlinks">
+    <a href="#capabilities" data-jp="事業領域" data-en="Capabilities">Capabilities</a>
+    <a href="#process" data-jp="プロセス" data-en="Process">Process</a>
+    <a href="#chain" data-jp="ブロックチェーン" data-en="On-chain">On-chain</a>
+    <a href="#network" data-jp="ネットワーク" data-en="Network">Network</a>
+  </div>
+  <div class="navactions">
+    <div class="lang">
+      <button class="active" onclick="setLang('jp')">JP</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+    <a href="#contact" class="btn btn-primary" data-jp="問い合わせ" data-en="Get Started">Get Started</a>
+    <button class="burger" id="burger" aria-label="Menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a class="mlink" href="#capabilities" onclick="closeMenu()"><span data-jp="事業領域" data-en="Capabilities">Capabilities</span><span class="mi">01</span></a>
+  <a class="mlink" href="#process" onclick="closeMenu()"><span data-jp="プロセス" data-en="Process">Process</span><span class="mi">02</span></a>
+  <a class="mlink" href="#chain" onclick="closeMenu()"><span data-jp="ブロックチェーン" data-en="On-chain">On-chain</span><span class="mi">03</span></a>
+  <a class="mlink" href="#network" onclick="closeMenu()"><span data-jp="ネットワーク" data-en="Network">Network</span><span class="mi">04</span></a>
+  <div class="m-cta">
+    <a href="#contact" class="btn btn-primary" onclick="closeMenu()" data-jp="お問い合わせ →" data-en="Get Started →">Get Started →</a>
+    <div class="m-foot">info@bloomxall.com<br>Tsukiji, Chuo-ku, Tokyo</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="eyebrow"><span class="dot"></span><span data-jp="エネルギー・トランジション・マーチャントバンク" data-en="Energy Transition Merchant Bank">Energy Transition Merchant Bank</span></div>
+  <h1 data-jp="エネルギー転換に、<span class='grad'>資本</span>を。" data-en="Financing the <span class='grad'>Energy Transition</span>">エネルギー転換に、<span class="grad">資本</span>を。</h1>
+  <p class="hero-sub" data-jp="カーボンクレジット、SAF、系統用蓄電、ASEAN再エネ。投資銀行的な組成力とブロックチェーンを掛け合わせ、優良案件と資本を直接つなぐ、東京発のマーチャントバンク。" data-en="Carbon credits, SAF, battery storage, ASEAN renewables. A Tokyo-based merchant bank connecting bankable projects with capital — fusing investment-banking origination with blockchain.">カーボンクレジット、SAF、系統用蓄電、ASEAN再エネ。投資銀行的な組成力とブロックチェーンを掛け合わせ、優良案件と資本を直接つなぐ、東京発のマーチャントバンク。</p>
+  <div class="hero-cta">
+    <a href="#contact" class="btn btn-primary" data-jp="相談する →" data-en="Get Started →">Get Started →</a>
+    <a href="#capabilities" class="btn btn-ghost" data-jp="事業領域を見る" data-en="Explore Capabilities">Explore Capabilities</a>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Carbon Credits<span></span></span><span>SAF Feedstock</span><span>Battery Storage</span><span>ASEAN Renewables</span><span>On-chain Carbon</span><span>Equity Finance</span><span>Project Finance</span><span>CORSIA</span><span>Nature-based</span>
+    <span>Carbon Credits</span><span>SAF Feedstock</span><span>Battery Storage</span><span>ASEAN Renewables</span><span>On-chain Carbon</span><span>Equity Finance</span><span>Project Finance</span><span>CORSIA</span><span>Nature-based</span>
+  </div>
+</div>
+
+<!-- CREDIBILITY -->
+<section class="cred">
+  <div class="cred-inner">
+    <div>
+      <div class="cred-label" data-jp="エコシステム & 実績" data-en="Ecosystem & Track Record">Ecosystem & Track Record</div>
+      <div class="chips">
+        <span class="chip">DeepMarkit · TSXV</span>
+        <span class="chip">GX League</span>
+        <span class="chip">ASCOJA Network</span>
+        <span class="chip">Philippine DTI</span>
+        <span class="chip">CleanEquity Monaco</span>
+        <span class="chip">London AIM</span>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="n">2011</div><div class="l" data-jp="設立" data-en="Founded">Founded</div></div>
+      <div class="stat"><div class="n">6</div><div class="l" data-jp="ASEAN対象国" data-en="ASEAN Nations">ASEAN Nations</div></div>
+      <div class="stat"><div class="n">50K+</div><div class="l" data-jp="ASCOJA人脈" data-en="ASCOJA Network">ASCOJA Network</div></div>
+      <div class="stat"><div class="n">18<span style="font-size:1rem">yr</span></div><div class="l" data-jp="実績" data-en="Track Record">Track Record</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section class="sec" id="capabilities">
+  <div class="sec-tag" data-jp="事業領域" data-en="Capabilities">Capabilities</div>
+  <h2 data-jp="案件組成から資本まで、一気通貫で。" data-en="From origination to capital — end to end.">案件組成から資本まで、一気通貫で。</h2>
+  <p class="lead" data-jp="気候・エネルギー領域に特化したマーチャントバンクとして、案件のソーシングから資金調達の実行までを統合的に提供します。" data-en="As a climate-and-energy-focused merchant bank, we integrate everything from project sourcing to financing execution.">気候・エネルギー領域に特化したマーチャントバンクとして、案件のソーシングから資金調達の実行までを統合的に提供します。</p>
+  <div class="grid">
+    <div class="cap reveal"><div class="cap-idx">C/01</div><div class="cap-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div><h3 data-jp="グローバルサウス・カーボン" data-en="Global South Carbon">グローバルサウス・カーボン</h3><p data-jp="ASCOJA人脈を活かし、フィリピン・インドネシア等でネイチャーベース／CORSIA適格カーボンクレジットを源流から組成。" data-en="Leveraging ASCOJA ties to originate nature-based & CORSIA-eligible carbon credits at source across the Philippines and Indonesia.">ASCOJA人脈を活かし、フィリピン・インドネシア等でネイチャーベース／CORSIA適格カーボンクレジットを源流から組成。</p></div>
+    <div class="cap reveal"><div class="cap-idx">C/02</div><div class="cap-ic"><svg viewBox="0 0 24 24"><path d="M3 19h18M5 19V9l7-5 7 5v10M9 19v-5h6v5"/></svg></div><h3 data-jp="エクイティ・ファイナンス" data-en="Equity Finance">エクイティ・ファイナンス</h3><p data-jp="上場企業向け第三者割当の組成・実行。社債・新株予約権を含む複合スキームを、優良ファンドとつなぐ。" data-en="Third-party allotments for listed companies — structuring and executing equity, bonds and warrants with top-tier funds.">上場企業向け第三者割当の組成・実行。社債・新株予約権を含む複合スキームを、優良ファンドとつなぐ。</p></div>
+    <div class="cap reveal"><div class="cap-idx">C/03</div><div class="cap-ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M5 9l7-7 7 7M7 22h10"/></svg></div><h3 data-jp="SAF原料開発" data-en="SAF Feedstock">SAF原料開発</h3><p data-jp="フィリピン・ルソン島でのSAF原料サプライチェーン構築。日本の需要拡大に向けたCORSIA適格バリューチェーン。" data-en="Building SAF feedstock supply chains in Luzon, Philippines — a CORSIA-eligible value chain for Japan's growing demand.">フィリピン・ルソン島でのSAF原料サプライチェーン構築。日本の需要拡大に向けたCORSIA適格バリューチェーン。</p></div>
+    <div class="cap reveal"><div class="cap-idx">C/04</div><div class="cap-ic"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M10 7h4M12 11v6M10 14h4"/></svg></div><h3 data-jp="蓄電所・再エネ" data-en="Storage & Renewables">蓄電所・再エネ</h3><p data-jp="高圧・系統用蓄電所、太陽光・バイオマス発電のプロジェクト開発とスキーム設計。" data-en="High-voltage grid-scale storage, solar and biomass project development and scheme design.">高圧・系統用蓄電所、太陽光・バイオマス発電のプロジェクト開発とスキーム設計。</p></div>
+    <div class="cap reveal"><div class="cap-idx">C/05</div><div class="cap-ic"><svg viewBox="0 0 24 24"><path d="M12 2l9 5v10l-9 5-9-5V7zM3 7l9 5 9-5M12 12v10"/></svg></div><h3 data-jp="カーボン × ブロックチェーン" data-en="Carbon × Blockchain">カーボン × ブロックチェーン</h3><p data-jp="DeepMarkit社（TSXV上場）と提携。カーボンクレジットのトークン化で透明性・トレーサビリティ・流動性を提供。" data-en="Partnered with DeepMarkit (TSXV). Tokenising carbon credits for transparency, traceability and liquidity.">DeepMarkit社（TSXV上場）と提携。カーボンクレジットのトークン化で透明性・トレーサビリティ・流動性を提供。</p></div>
+    <div class="cap reveal"><div class="cap-idx">C/06</div><div class="cap-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1M18 11l2 2 3-3"/></svg></div><h3 data-jp="ASEAN展開アドバイザリー" data-en="ASEAN Advisory">ASEAN展開アドバイザリー</h3><p data-jp="外務省系財団出身代表のASEAN6カ国政府レベル人脈。市場参入から資金調達設計まで支援。" data-en="Government-level access across 6 ASEAN nations via our MOFA-foundation heritage — from market entry to capital structuring.">外務省系財団出身代表のASEAN6カ国政府レベル人脈。市場参入から資金調達設計まで支援。</p></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="proc">
+  <div class="sec">
+    <div class="sec-tag" data-jp="プロセス" data-en="How We Work">How We Work</div>
+    <h2 data-jp="優良案件と資本を、4つのステップでつなぐ。" data-en="Connecting projects and capital in four steps.">優良案件と資本を、4つのステップでつなぐ。</h2>
+    <div class="proc-grid">
+      <div class="step reveal"><div class="num">STEP 01</div><h4 data-jp="ソーシング" data-en="Origination">ソーシング</h4><p data-jp="独自ネットワークで、カーボン・再エネ・蓄電・SAFの優良案件を発掘・評価。" data-en="We identify and evaluate bankable carbon, renewables, storage and SAF projects through our proprietary network.">独自ネットワークで、カーボン・再エネ・蓄電・SAFの優良案件を発掘・評価。</p></div>
+      <div class="step reveal"><div class="num">STEP 02</div><h4 data-jp="精査・DD" data-en="Diligence">精査・DD</h4><p data-jp="収益構造・技術・規制・カーボン適格性を多面的にデューデリジェンス。" data-en="In-depth diligence on revenue structure, technology, regulation and carbon eligibility.">収益構造・技術・規制・カーボン適格性を多面的にデューデリジェンス。</p></div>
+      <div class="step reveal"><div class="num">STEP 03</div><h4 data-jp="ストラクチャリング" data-en="Structuring">ストラクチャリング</h4><p data-jp="エクイティ・社債・新株予約権・トークン化を組み合わせ、最適なスキームを設計。" data-en="We design the optimal scheme — equity, bonds, warrants and tokenisation.">エクイティ・社債・新株予約権・トークン化を組み合わせ、最適なスキームを設計。</p></div>
+      <div class="step reveal"><div class="num">STEP 04</div><h4 data-jp="実行" data-en="Execution">実行</h4><p data-jp="優良ファンド・投資家への配置と、着金後の案件組成まで一貫して伴走。" data-en="Placement with top-tier funds and investors, with hands-on support through to deployment.">優良ファンド・投資家への配置と、着金後の案件組成まで一貫して伴走。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ON-CHAIN FEATURE -->
+<section class="sec" id="chain">
+  <div class="feature">
+    <div>
+      <div class="sec-tag" data-jp="オンチェーン" data-en="On-chain">On-chain</div>
+      <h2 data-jp="カーボンクレジットに、透明性と流動性を。" data-en="Bringing transparency and liquidity to carbon.">カーボンクレジットに、透明性と流動性を。</h2>
+      <p class="lead" data-jp="ブロックチェーンの力で、カーボンクレジットの出所と所有を検証可能に。機関投資家グレードの準拠インフラの上で、デジタル化を進めます。" data-en="Blockchain makes carbon provenance and ownership verifiable. We build on institutional-grade, compliant infrastructure.">ブロックチェーンの力で、カーボンクレジットの出所と所有を検証可能に。機関投資家グレードの準拠インフラの上で、デジタル化を進めます。</p>
+      <div class="feature-list">
+        <div class="fl"><span class="b">→</span><div data-jp="<strong>イモビライゼーション方式</strong>でレジストリと整合し、二重計上を防止。" data-en="<strong>Immobilisation-based</strong> tokenisation aligned with registries to prevent double-counting."><strong>イモビライゼーション方式</strong>でレジストリと整合し、二重計上を防止。</div></div>
+        <div class="fl"><span class="b">→</span><div data-jp="<strong>CCP／ICVCM適格</strong>・除去系中心の高品質クレジットをキュレーション。" data-en="Curated <strong>CCP / ICVCM-eligible</strong>, removals-led high-quality credits."><strong>CCP／ICVCM適格</strong>・除去系中心の高品質クレジットをキュレーション。</div></div>
+        <div class="fl"><span class="b">→</span><div data-jp="<strong>DeepMarkit提携</strong>のMintCarbon等、準拠プラットフォームを活用。" data-en="Built on compliant platforms incl. <strong>DeepMarkit's MintCarbon</strong>."><strong>DeepMarkit提携</strong>のMintCarbon等、準拠プラットフォームを活用。</div></div>
+      </div>
+    </div>
+    <div class="feature-visual">
+      <svg width="60%" viewBox="0 0 200 200" style="opacity:0.92"><rect x="40" y="40" width="120" height="120" rx="26" fill="url(#bxSky)"/><g transform="translate(100,100) scale(1.4)"><path d="M0 -42 L34 -6 L24 4 L0 -22 L-24 4 L-34 -6 Z" fill="url(#bxGold)"/><path d="M0 42 L34 6 L24 -4 L0 22 L-24 -4 L-34 6 Z" fill="url(#bxGold)" opacity="0.6"/><circle cx="0" cy="0" r="6" fill="#fff"/></g></svg>
+      <div class="node" style="top:14%;left:10%">VERRA / GS</div>
+      <div class="node" style="top:22%;right:8%">CORSIA</div>
+      <div class="node" style="bottom:16%;left:12%">REMOVALS</div>
+      <div class="node" style="bottom:22%;right:10%">ON-CHAIN</div>
+    </div>
+  </div>
+</section>
+
+<!-- ASEAN NETWORK -->
+<section class="proc" id="network">
+  <div class="sec">
+    <div class="sec-tag" data-jp="ASEANネットワーク" data-en="ASEAN Network">ASEAN Network</div>
+    <h2 data-jp="福田ドクトリンから半世紀。他社が再現できない人脈。" data-en="A half-century of diplomatic ties no competitor can replicate.">福田ドクトリンから半世紀。他社が再現できない人脈。</h2>
+    <div class="aseangrid">
+      <div class="acard reveal"><div class="yr">1974</div><h4 data-jp="福田ドクトリン" data-en="Fukuda Doctrine">福田ドクトリン</h4><p data-jp="ASEAN留学生招へい事業の起源。対等なパートナーシップの外交理念。" data-en="Origin of ASEAN student exchange — a philosophy of equal partnership.">ASEAN留学生招へい事業の起源。対等なパートナーシップの外交理念。</p></div>
+      <div class="acard reveal"><div class="yr">1977</div><h4 data-jp="ASCOJA設立" data-en="ASCOJA Founded">ASCOJA設立</h4><p data-jp="5万人超の元日本留学生ネットワーク。閣僚・大使・CEOを多数輩出。" data-en="50,000+ alumni — ministers, ambassadors and CEOs across ASEAN.">5万人超の元日本留学生ネットワーク。閣僚・大使・CEOを多数輩出。</p></div>
+      <div class="acard reveal"><div class="yr">2000s</div><h4 data-jp="信頼の構築" data-en="Trust Built">信頼の構築</h4><p data-jp="外務省系財団での実務を通じ、ASCOJA中枢と本物の信頼関係を構築。" data-en="Genuine trust with ASCOJA leadership built through MOFA-foundation work.">外務省系財団での実務を通じ、ASCOJA中枢と本物の信頼関係を構築。</p></div>
+      <div class="acard reveal"><div class="yr" data-jp="現在" data-en="Now">Now</div><h4 data-jp="6カ国に直結" data-en="6 Nations">6カ国に直結</h4><p data-jp="フィリピン・シンガポール・マレーシア・タイ・インドネシア・ブルネイ。" data-en="Philippines, Singapore, Malaysia, Thailand, Indonesia, Brunei.">フィリピン・シンガポール・マレーシア・タイ・インドネシア・ブルネイ。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band" id="contact">
+  <div class="cta-inner">
+    <div class="sec-tag" style="justify-content:center" data-jp="お問い合わせ" data-en="Get Started">Get Started</div>
+    <h2 data-jp="エネルギーの未来を、共に。" data-en="Let's build the energy economy of tomorrow.">エネルギーの未来を、共に。</h2>
+    <p class="lead" data-jp="上場企業の資金調達、ASEAN展開、カーボンクレジット事業のご相談を承ります。" data-en="We welcome enquiries on equity financing, ASEAN expansion and carbon credit programmes.">上場企業の資金調達、ASEAN展開、カーボンクレジット事業のご相談を承ります。</p>
+    <a href="mailto:info@bloomxall.com" class="btn btn-primary">info@bloomxall.com →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot">
+    <div class="foot-top">
+      <div>
+        <a href="#top" class="brand">
+          <svg viewBox="0 0 200 200"><rect x="6" y="6" width="188" height="188" rx="40" fill="url(#bxSky)"/><g transform="translate(100,100) scale(1.25)"><path d="M0 -42 L34 -6 L24 4 L0 -22 L-24 4 L-34 -6 Z" fill="url(#bxGold)"/><path d="M0 42 L34 6 L24 -4 L0 22 L-24 -4 L-34 6 Z" fill="url(#bxGold)" opacity="0.6"/><circle cx="0" cy="0" r="6" fill="#fff"/></g></svg>
+          <span><span class="wm">BLOOM<span class="x">X</span></span><br><span class="sub">ALLIANCE</span></span>
+        </a>
+        <div class="foot-tag" data-jp="エネルギー・トランジション・マーチャントバンク<br>東京都中央区築地" data-en="Energy Transition Merchant Bank<br>Tsukiji, Chuo-ku, Tokyo">エネルギー・トランジション・マーチャントバンク<br>東京都中央区築地</div>
+      </div>
+      <div class="foot-links">
+        <a href="#capabilities" data-jp="事業領域" data-en="Capabilities">Capabilities</a>
+        <a href="#process" data-jp="プロセス" data-en="Process">Process</a>
+        <a href="#network" data-jp="ネットワーク" data-en="Network">Network</a>
+        <a href="mailto:info@bloomxall.com">Contact</a>
+      </div>
+    </div>
+    <div class="foot-copy">
+      <span>© 2026 BLOOMX ALLIANCE株式会社</span>
+      <span data-jp="本サイトは情報提供のみを目的とし、金融商品の勧誘を目的とするものではありません。" data-en="This site is for information only and does not constitute financial solicitation.">本サイトは情報提供のみを目的とし、金融商品の勧誘を目的とするものではありません。</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script>
+const obs=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*60);obs.unobserve(e.target)}})},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+function toggleMenu(){document.body.classList.toggle('menu-open')}
+function closeMenu(){document.body.classList.remove('menu-open')}
+window.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+
+function setLang(lang){
+  document.querySelectorAll('.lang button').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.lang button:${lang==='jp'?'first':'last'}-child`).classList.add('active');
+  document.querySelectorAll('[data-jp][data-en]').forEach(el=>{
+    el.innerHTML=el.getAttribute('data-'+lang);
+  });
+  document.documentElement.lang = lang==='jp'?'ja':'en';
+}
+</script>
+</body>
+</html>
